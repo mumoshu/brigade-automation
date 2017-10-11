@@ -74,7 +74,7 @@ const token = process.env.GITHUB_TOKEN;
 with
 
 ```typescript
-const token = "your token goes here"
+const token = "your token goes here";
 ```
 
 *If you  add the token  to the `atomist.config.ts`, please  do **not**

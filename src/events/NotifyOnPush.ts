@@ -28,7 +28,7 @@ import { logger } from "@atomist/automation-client/internal/util/logger";
 
 import * as graphql from "../typings/types";
 
-@EventHandler("Notify repo channels when there is a push", GraphQL.subscriptionFromFile("graphql/push"))
+@EventHandler("notify repo channels when there is a push", GraphQL.subscriptionFromFile("graphql/push"))
 @Tags("push", "notification")
 export class NotifyOnPush implements HandleEvent<graphql.PushWithRepo.Subscription> {
 

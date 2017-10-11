@@ -6,7 +6,7 @@ This repository contains examples demonstrating use of
 the [Atomist][atomist] API.  You will find examples illustrating:
 
 -   Creating bot commands using _command handlers_
--   Responding to DevOps events, e.g., someone commenting on an issue,
+-   Responding to DevOps events, e.g., commits pushed to a repository,
     using _event handlers_
 
 These example use the [`@atomist/automation-client`][client] node

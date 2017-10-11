@@ -147,7 +147,7 @@ have saved your changes, you should see that event appear in the
 console logs of your locally running automation client, followed by a
 log of the actions the event handler is taking.  Once those actions
 are complete, you should see a new message in the
-`[#notify-on-push][nop-channel]` channel in the atomist-playground
+[`#notify-on-push`][nop-channel] channel in the atomist-playground
 Slack team.
 
 [nop-handler]: https://github.com/atomist/automation-seed-ts/blob/master/src/events/NotifyOnPush.ts (Atomist NotifyOnPush Event Handler)

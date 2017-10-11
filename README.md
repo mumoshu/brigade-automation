@@ -2,13 +2,12 @@
 
 [![Build Status](https://travis-ci.org/atomist/automation-seed-ts.svg?branch=master)](https://travis-ci.org/atomist/automation-seed-ts)
 
-This repository contains sample code demonstrating use of
+This repository contains examples demonstrating use of
 the [Atomist][atomist] API.  You will find examples illustrating:
 
 -   Creating bot commands using _command handlers_
 -   Responding to DevOps events, e.g., someone commenting on an issue,
     using _event handlers_
--   Ingestors _(coming soon)_
 
 These example use the [`@atomist/automation-client`][client] node
 module to implement a local client that connects to the Atomist API.

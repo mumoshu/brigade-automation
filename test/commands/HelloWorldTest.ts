@@ -18,9 +18,12 @@ import "mocha";
 import * as assert from "power-assert";
 
 import { HandlerContext } from "@atomist/automation-client/Handlers";
+import { LoggingConfig } from "@atomist/automation-client/internal/util/logger";
 
 import { HelloWorld } from "../../src/commands/HelloWorld";
 import { Person } from "../../src/typings/types";
+
+LoggingConfig.format = "cli";
 
 describe("HelloWorld", () => {
 
@@ -35,7 +38,7 @@ describe("HelloWorld", () => {
         let responseMessage: string;
         const ctx = {
             graphClient: {
-                executeFile(queryFile: string, params: Person.Variables): Promise<Person.Query> {
+                executeQueryFromFile(queryFile: string, params: Person.Variables): Promise<Person.Query> {
                     if (params.slackUser !== hello.slackUser || params.teamId !== teamId) {
                         return null;
                     }
@@ -73,7 +76,7 @@ describe("HelloWorld", () => {
         let responseMessage: string;
         const ctx = {
             graphClient: {
-                executeFile(queryFile: string, params: Person.Variables): Promise<Person.Query> {
+                executeQueryFromFile(queryFile: string, params: Person.Variables): Promise<Person.Query> {
                     return Promise.resolve({
                         ChatTeam: [{
                             members: [],

@@ -27,7 +27,7 @@ import {
 } from "@atomist/automation-client/Handlers";
 import { logger } from "@atomist/automation-client/internal/util/logger";
 
-import * as graphql from "../typings/types";
+import { Person } from "../typings/types";
 
 @CommandHandler("sends a hello back to the channel", "hello world")
 @Tags("hello")
@@ -54,7 +54,7 @@ export class HelloWorld implements HandleCommand {
             return Promise.resolve(Success);
         }
 
-        return ctx.graphClient.executeFile<graphql.Person.Query, graphql.Person.Variables>("graphql/person",
+        return ctx.graphClient.executeQueryFromFile<Person.Query, Person.Variables>("graphql/person",
             { teamId: ctx.teamId, slackUser: this.slackUser })
             .then(result => {
                 if (result && result.ChatTeam && result.ChatTeam[0] && result.ChatTeam[0].members &&

@@ -1,6 +1,6 @@
 {
   "name": "@atomist/automation-seed",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Atomist automation seed project",
   "author": "Atomist",
   "license": "Apache-2.0",
@@ -18,7 +18,7 @@
     "url": "https://github.com/atomist/automation-seed-ts/issues"
   },
   "dependencies": {
-    "@atomist/automation-client": "^0.1.41",
+    "@atomist/automation-client": "^0.2.0",
     "app-root-path": "^2.0.1"
   },
   "devDependencies": {
@@ -29,9 +29,9 @@
     "espower-typescript": "^8.0.2",
     "graphql-code-generator": "^0.8.13",
     "mocha": "^3.5.3",
-    "nodemon": "^1.12.0",
     "npm-run-all": "^4.1.1",
     "power-assert": "^1.4.4",
+    "rimraf": "^2.6.2",
     "supervisor": "^0.12.0",
     "ts-node": "^3.3.0",
     "tslint": "^5.4.3",
@@ -43,27 +43,34 @@
     "test": "test"
   },
   "scripts": {
-    "autostart": "npm-run-all --parallel watch:build watch:server --print-label",
-    "autotest": "supervisor -q -n exit -e ts -x npm -- test",
-    "build": "npm run lint && npm run compile && npm test",
-    "clean": "npm run clean-js ; rm -rf *-v8.log profile.txt build",
-    "clean-js": "find src test -type f -name '*.js' -print0 | xargs -0 rm -f",
-    "compile": "npm run gql:gen && tsc -p .",
-    "distclean": "npm run clean ; rm -rf node_modules",
+    "autostart": "npm-run-all --print-label --parallel watch:compile watch:server",
+    "autotest": "supervisor --watch src,test --extensions ts --no-restart-on exit --quiet --exec npm -- test",
+    "build": "npm-run-all lint compile test",
+    "clean": "npm-run-all clean:js clean:build",
+    "clean:build": "rimraf *-v8.log profile.txt build",
+    "clean:dist": "npm-run-all clean clean:npm",
+    "clean:js": "rimraf '{src,test}/**/*.js'",
+    "clean:npm": "rimraf node_modules",
+    "compile": "npm-run-all gql:gen compile:ts",
+    "compile:ts": "tsc --project .",
+    "debug": "npm-run-all compile debug:client",
+    "debug:client": "node $NODE_DEBUG_OPTION --trace-warnings $(npm bin)/atomist-client",
     "fmt": "tsfmt --replace",
-    "git:info": "$(npm bin)/git-info",
+    "git:info": "git-info",
     "gql:gen": "gql-gen --file node_modules/@atomist/automation-client/graph/schema.cortex.json --template typescript -m --out ./src/typings/ \"./graphql/**/*.graphql\"",
     "lint": "tslint --format verbose --project . --exclude '{build,node_modules}/**' '**/*.ts'",
-    "lint-fix": "npm run lint -- --fix",
-    "start": "npm run compile && npm run git:info && $(npm bin)/atomist-client --open=true",
+    "lint:fix": "npm run lint -- --fix",
+    "start": "npm-run-all compile git:info start:client",
+    "start:client": "atomist-client --open=true",
+    "start:server": "atomist-client",
     "test": "mocha --compilers ts:espower-typescript/guess 'test/**/*.ts'",
-    "testone": "mocha --compilers ts:espower-typescript/guess \"test/**/${TEST:-*.ts}\"",
+    "test:one": "mocha --compilers ts:espower-typescript/guess \"test/**/${TEST:-*.ts}\"",
     "typedoc": "typedoc --mode modules --excludeExternals",
-    "watch:build": "tsc --watch",
-    "watch:server": "nodemon node_modules/@atomist/automation-client/start.client.js --watch './build'"
+    "watch:compile": "tsc --project . --watch",
+    "watch:server": "supervisor --watch build --quiet --exec npm -- run start:server"
   },
   "engines": {
-    "node": "8.5.x",
-    "npm": "5.3.x"
+    "node": "8.7.x",
+    "npm": "5.4.x"
   }
 }

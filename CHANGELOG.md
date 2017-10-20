@@ -9,7 +9,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.1.0...HEAD
 
-## [0.1.0][] - 2017-10-11
+## [0.2.0][]
+
+[0.2.0]: https://github.com/atomist/automation-seed-ts/compare/0.1.0...0.2.0
+
+Update Release
+
+### Changed
+
+-   Updated to @atomist/automation-client@0.2.0
+-   Improve package scripts
+
+## [0.1.0][] - 2017-10-12
 
 Initial Release
 

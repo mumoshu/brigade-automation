@@ -54,35 +54,30 @@ $ npm install
 
 ### Configuring your environment
 
-For the client to connect and authenticate to the Atomist API,
-a [GitHub personal access token][token] with `read:org` scope is
-required.  Once you have obtained the GitHub personal access token,
-make it available to the client by exporting it into an environment
-variable:
+If this is the first time you will be running an Atomist API client
+locally, you should first configure your system using the
+`atomist-config` script:
 
 ```
-$ export GITHUB_TOKEN=<your token goes here>
+$ `npm bin`/atomist-config [SLACK_TEAM_ID]
 ```
 
-Alternatively you can also place the token in `src/atomist.config.ts`.
-Replace
+The script does two things: records what Slack team you want your
+automations running in and creates
+a [GitHub personal access token][token] with "read:org" scope.
 
-```typescript
-const token = process.env.GITHUB_TOKEN;
-```
+You must run the automations in a Slack team of which you are a
+member.  The Slack team ID for atomist-playground is `T7GMF5USG`.  If
+you want to run the automations in another team, you can get the Slack
+team ID by typing `team` in a DM to the Atomist Bot.  If you do not
+supply the Slack team ID on the command line, the script will prompt
+you to enter it.
 
-with
-
-```typescript
-const token = "your token goes here";
-```
-
-*If you  add the token  to the `atomist.config.ts`, please  do **not**
-commit the file and push it to GitHub.com.*
-
-[token]: https://github.com/settings/tokens (GitHub Personal Access Tokens)
-
-The Atomist API will only allows members of the GitHub team
+The client needs a GitHub personal access token with `read:org` scope
+when connecting to the Atomist API.  The Atomist API will use the
+token to confirm you are who you say you are and are in a GitHub org
+connected to the Slack team in which you are running the automations.
+In addition, the Atomist API only allows members of the GitHub team
 `atomist-automation` to authenticate and register a new client.  If
 you followed the instructions above and have been invited to
 the [atomist-playground][play-gh] GitHub organization, you will have
@@ -92,12 +87,14 @@ you will have to create a team in your GitHub organization named
 `atomist-automation` and add the users who want to create and register
 automations to it.
 
+[token]: https://github.com/settings/tokens (GitHub Personal Access Tokens)
+
 ## Starting up the automation-client
 
 To start the client, run the following command:
 
 ```
-$ npm run start
+$ npm run autostart
 ```
 
 ## Invoking a command handler from Slack
@@ -122,7 +119,7 @@ bot in Slack.
 [hello]: https://github.com/atomist/automation-seed-ts/blob/master/src/commands/HelloWorld.ts (HelloWorld Command Handler)
 
 Feel free to modify the code in the `HelloWorld` command handler,
-restart your local automation client, and see what happens!
+Node.js will automatically reload the client, and see what happens!
 
 ## Triggering an event handler
 
@@ -142,7 +139,7 @@ channels associated with that repository.
 If you have followed the instructions above and are running these
 automations against the atomist-playground Slack team and GitHub
 organization, go ahead and edit the [notify-on-push][nop-repo]
-repository by adding some test to its [README][nop-readme].  Once you
+repository by adding some text to its [README][nop-readme].  Once you
 have saved your changes, you should see that event appear in the
 console logs of your locally running automation client, followed by a
 log of the actions the event handler is taking.  Once those actions
@@ -183,7 +180,8 @@ You will need to install [node][] to build and test this project.
 Command | Reason
 ------- | ------
 `npm install` | to install all the required packages
-`npm run start` | to start the Atomist automation client
+`npm start` | to start the Atomist automation client
+`npm run autostart` | run the client, refreshing when files change
 `npm run lint` | to run tslint against the TypeScript
 `npm run compile` | to compile all TypeScript into JavaScript
 `npm test` | to run tests and ensure everything is working

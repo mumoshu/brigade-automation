@@ -9,7 +9,7 @@ the [Atomist][atomist] API.  You will find examples illustrating:
 -   Responding to DevOps events, e.g., commits pushed to a repository,
     using _event handlers_
 
-These example use the [`@atomist/automation-client`][client] node
+These examples use the [`@atomist/automation-client`][client] node
 module to implement a local client that connects to the Atomist API.
 
 [client]: https://github.com/atomist/automation-client-ts (@atomist/automation-client Node Module)
@@ -67,25 +67,29 @@ automations running in and creates
 a [GitHub personal access token][token] with "read:org" scope.
 
 You must run the automations in a Slack team of which you are a
-member.  The Slack team ID for atomist-playground is `T7GMF5USG`.  If
-you want to run the automations in another team, you can get the Slack
-team ID by typing `team` in a DM to the Atomist Bot.  If you do not
-supply the Slack team ID on the command line, the script will prompt
-you to enter it.
+member.  You can get the Slack team ID by typing `team` in a DM to the
+Atomist Bot.  If you do not supply the Slack team ID on the command
+line, the script will prompt you to enter it.
 
-The client needs a GitHub personal access token with `read:org` scope
-when connecting to the Atomist API.  The Atomist API will use the
-token to confirm you are who you say you are and are in a GitHub org
-connected to the Slack team in which you are running the automations.
-In addition, the Atomist API only allows members of the GitHub team
-`atomist-automation` to authenticate and register a new client.  If
-you followed the instructions above and have been invited to
-the [atomist-playground][play-gh] GitHub organization, you will have
-been added to this team in that organization.  If you are trying to
-run these automations in your own Slack team and GitHub organization,
-you will have to create a team in your GitHub organization named
-`atomist-automation` and add the users who want to create and register
-automations to it.
+> *The Slack team ID for atomist-playground is `T7GMF5USG`.*
+
+The `atomist-config` script will prompt you for your GitHub
+credentials.  It needs them to create the GitHub personal access
+token.  Atomist does not store your credentials and only writes the
+token to your local machine.
+
+The Atomist API client authenticates using a GitHub personal access
+token.  The Atomist API uses the token to confirm you are who you say
+you are and are in a GitHub org connected to the Slack team in which
+you are running the automations.  In addition, the Atomist API only
+allows members of the GitHub team `atomist-automation` to authenticate
+and register a new client.  You will have to create a team in your
+GitHub organization named `atomist-automation` and add the users who
+want to create and register automations to it.
+
+> *If you followed the instructions above and have been invited to
+> the [atomist-playground][play-gh] GitHub organization, you will have
+> been added to this team in that organization.*
 
 [token]: https://github.com/settings/tokens (GitHub Personal Access Tokens)
 
@@ -185,7 +189,7 @@ Command | Reason
 `npm run lint` | to run tslint against the TypeScript
 `npm run compile` | to compile all TypeScript into JavaScript
 `npm test` | to run tests and ensure everything is working
-`npm run autotest` | run tests continuously (you may also need to run `tsc -w`)
+`npm run autotest` | run tests continuously
 `npm run clean` | remove stray compiled JavaScript files and build directory
 
 ### Release

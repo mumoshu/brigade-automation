@@ -8,15 +8,15 @@
     "type": "git",
     "url": "https://github.com/atomist/automation-seed-ts.git"
   },
+  "homepage": "https://github.com/atomist/automation-seed-ts#readme",
+  "bugs": {
+    "url": "https://github.com/atomist/automation-seed-ts/issues"
+  },
   "keywords": [
     "atomist",
     "automation",
     "seed"
   ],
-  "homepage": "https://github.com/atomist/automation-seed-ts#readme",
-  "bugs": {
-    "url": "https://github.com/atomist/automation-seed-ts/issues"
-  },
   "dependencies": {
     "@atomist/automation-client": "^0.2.1",
     "app-root-path": "^2.0.1"
@@ -58,9 +58,9 @@
     "gql:gen": "gql-gen --file node_modules/@atomist/automation-client/graph/schema.cortex.json --template typescript -m --out ./src/typings/ './graphql/**/*.graphql'",
     "lint": "tslint --format verbose --project . --exclude '{build,node_modules}/**' '**/*.ts'",
     "lint:fix": "npm run lint -- --fix",
-    "start": "npm-run-all compile git:info start:client",
+    "start": "npm-run-all git:info start:server",
     "start:client": "atomist-client --open=true",
-    "start:server": "atomist-client",
+    "start:server": "node --trace-warnings --trace_gc --expose_gc --optimize_for_size --always_compact --max_old_space_size=256 node_modules/.bin/atomist-client",
     "test": "mocha --compilers ts:espower-typescript/guess 'test/**/*.ts'",
     "test:one": "mocha --compilers ts:espower-typescript/guess \"test/**/${TEST:-*.ts}\"",
     "typedoc": "typedoc --mode modules --excludeExternals",
@@ -68,7 +68,7 @@
     "watch:server": "supervisor --watch build --quiet --exec npm -- run start:server"
   },
   "engines": {
-    "node": "8.7.x",
-    "npm": "5.4.x"
+    "node": "8.x.x",
+    "npm": "5.x.x"
   }
 }

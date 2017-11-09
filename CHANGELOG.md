@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.1.0...HEAD
 
+### Changed
+
+-   Update test script to avoid mocha deprecated --compilers option
+-   Cleaned up tests to use `.then(done, done)`
+
 ## [0.2.0][]
 
 [0.2.0]: https://github.com/atomist/automation-seed-ts/compare/0.1.0...0.2.0

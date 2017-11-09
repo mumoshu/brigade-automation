@@ -67,8 +67,7 @@ describe("HelloWorld", () => {
         promise.then(result => {
             assert(result.code === 0);
             assert(responseMessage === `Hello ${hello.name} from ${forename} ${surname}`);
-            done();
-        }).catch(done);
+        }).then(done, done);
 
     });
 
@@ -97,8 +96,7 @@ describe("HelloWorld", () => {
         promise.then(result => {
             assert(result.code === 0);
             assert(responseMessage === `Hello ${hello.name}`);
-            done();
-        }).catch(done);
+        }).then(done, done);
     });
 
 });

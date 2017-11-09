@@ -63,8 +63,7 @@ describe("NotifyOnPush", () => {
             assert(responseMessage.indexOf(sha) > 0);
             assert(responseChannels.length === 1);
             assert(responseChannels[0] === channels[0].name);
-            done();
-        }).catch(done);
+        }).then(done, done);
     });
 
     it("should send a notification to all repo channels", done => {
@@ -97,8 +96,7 @@ describe("NotifyOnPush", () => {
             assert(result.code === 0);
             assert(responseMessage.indexOf(sha) > 0);
             assert.deepEqual(responseChannels, channels.map(c => c.name));
-            done();
-        }).catch(done);
+        }).then(done, done);
     });
 
     it("should send no notifications if no channels", done => {
@@ -131,8 +129,7 @@ describe("NotifyOnPush", () => {
             assert(result.code === 0);
             assert(responseMessage === undefined);
             assert(responseChannels === undefined);
-            done();
-        }).catch(done);
+        }).then(done, done);
     });
 
 });

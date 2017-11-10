@@ -61,7 +61,7 @@ locally, you should first configure your system using the
 `atomist-config` script:
 
 ```
-$ `npm bin`/atomist-config [SLACK_TEAM_ID]
+$ `npm bin`/atomist config [SLACK_TEAM_ID]
 ```
 
 The script does two things: records what Slack team you want your
@@ -190,8 +190,7 @@ Command | Reason
 To create a new release of the project, simply push a tag of the form
 `M.N.P` where `M`, `N`, and `P` are integers that form the next
 appropriate [semantic version][semver] for release.  The version in
-the package.json is replaced by the build and is totally ignored!  For
-example:
+the package.json must be the same as the tag.  For example:
 
 [semver]: http://semver.org
 

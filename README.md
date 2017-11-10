@@ -158,15 +158,6 @@ Slack team.
 [nop-readme]: https://github.com/atomist-playground/notify-on-push/edit/master/README.md (Edit NotifyOnPush README)
 [nop-channel]: https://atomist-playground.slack.com/messages/C7GNF6743/ (NotifyOnPush Slack Channel)
 
-## Dashboard and GraphQL data explorer
-
-When the automation client has successfully established a connection
-to the Atomist API server, the Dashboard (work-in-progress) and
-GraphQL data explorer will be available.
-
-*   Dashboard: http://localhost:2866
-*   GraphQL Data Explorer: http://localhost:2866/graphql
-
 ## Support
 
 General support questions should be discussed in the `#support`

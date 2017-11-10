@@ -44,12 +44,14 @@ $ npm -v
 
 ### Cloning the repository and installing dependencies
 
-To get started run the following commands:
+To get started run the following commands to clone the project,
+install its dependencies, and build the project:
 
 ```
 $ git clone git@github.com:atomist/automation-seed-ts.git
 $ cd automation-seed-ts
 $ npm install
+$ npm run build
 ```
 
 ### Configuring your environment

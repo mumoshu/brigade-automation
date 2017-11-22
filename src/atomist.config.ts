@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Configuration } from "@atomist/automation-client/configuration";
+import { Configuration } from "@atomist/automation-client";
 import * as appRoot from "app-root-path";
 
 import { HelloWorld } from "./commands/HelloWorld";
@@ -28,7 +28,8 @@ const token = process.env.GITHUB_TOKEN;
 export const configuration: Configuration = {
     name: pj.name,
     version: pj.version,
-    teamIds: [], // <-- run @atomist pwd in your slack team to obtain the team id
+    keywords: ["atomist", "seed"],
+    teamIds: [], // <-- run `@atomist team` in your slack team to obtain the team id
     commands: [
         () => new HelloWorld(),
     ],

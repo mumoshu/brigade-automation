@@ -14,17 +14,19 @@
  * limitations under the License.
  */
 
-import * as GraphQL from "@atomist/automation-client/graph/graphQL";
-import { Failure, Success } from "@atomist/automation-client/HandlerResult";
 import {
     EventFired,
     EventHandler,
+    failure,
+    GraphQL,
     HandleEvent,
     HandlerContext,
     HandlerResult,
+    logger,
+    Success,
+    success,
     Tags,
-} from "@atomist/automation-client/Handlers";
-import { logger } from "@atomist/automation-client/internal/util/logger";
+} from "@atomist/automation-client";
 
 import * as graphql from "../typings/types";
 
@@ -43,7 +45,6 @@ export class NotifyOnPush implements HandleEvent<graphql.PushWithRepo.Subscripti
                 return Success;
             }
         }))
-            .then(() => Success)
-            .catch(() => Failure);
+            .then(success, failure);
     }
 }

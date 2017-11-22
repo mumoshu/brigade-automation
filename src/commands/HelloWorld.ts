@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-import { MappedParameter } from "@atomist/automation-client/decorators";
-import { Success } from "@atomist/automation-client/HandlerResult";
 import {
     CommandHandler,
+    failure,
     HandleCommand,
     HandlerContext,
     HandlerResult,
+    logger,
+    MappedParameter,
     MappedParameters,
     Parameter,
+    Success,
+    success,
     Tags,
-} from "@atomist/automation-client/Handlers";
-import { logger } from "@atomist/automation-client/internal/util/logger";
+} from "@atomist/automation-client";
 
 import { Person } from "../typings/types";
 
@@ -72,8 +74,6 @@ export class HelloWorld implements HandleCommand {
                     return ctx.messageClient.respond(`Hello ${this.name}`);
                 }
             })
-            .then(() => {
-                return Success;
-            });
+            .then(success, failure);
     }
 }

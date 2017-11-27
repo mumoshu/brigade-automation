@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.2.0...HEAD
 
+### Changed
+
+-   Remove unused dependency on ts-node
+-   Add no-install and no-compile options to `atomist start`
+
 ## [0.2.0][] - 2017-11-22
 
 [0.2.0]: https://github.com/atomist/automation-seed-ts/compare/0.1.0...0.2.0

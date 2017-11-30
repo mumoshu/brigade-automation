@@ -16,6 +16,15 @@ module to implement a local client that connects to the Atomist API.
 
 ## Prerequisites
 
+Below are brief instructions on how to get started running this
+project yourself.  If you just want to use the functionality this
+project provides, see the [Atomist documentation][docs].  For more
+detailed information on developing automations, see
+the [Atomist Developer Guide][dev].
+
+[docs]: https://docs.atomist.com/ (Atomist User Guide)
+[dev]: https://docs.atomist.com/developer/ (Atomist Developer Guide)
+
 ### Access to Atomist testing environment
 
 To get access to this preview, please reach out to members of Atomist
@@ -40,6 +49,9 @@ $ npm -v
 5.4.1
 ```
 
+The `node` version should be 8 or greater and the `npm` version should
+be 5 or greater.
+
 [node]: https://nodejs.org/ (Node.js)
 
 ### Cloning the repository and installing dependencies
@@ -57,41 +69,35 @@ $ npm run build
 ### Configuring your environment
 
 If this is the first time you will be running an Atomist API client
-locally, you should first configure your system using the
-`atomist-config` script:
+locally, you should first configure your system using the `atomist`
+script:
 
 ```
-$ `npm bin`/atomist config [SLACK_TEAM_ID]
+$ `npm bin`/atomist config
 ```
 
 The script does two things: records what Slack team you want your
 automations running in and creates
-a [GitHub personal access token][token] with "read:org" scope.
+a [GitHub personal access token][token] with "repo" and "read:org"
+scopes.
 
-You must run the automations in a Slack team of which you are a
-member.  You can get the Slack team ID by typing `team` in a DM to the
-Atomist Bot.  If you do not supply the Slack team ID on the command
-line, the script will prompt you to enter it.
+The script will prompt you for you Slack team ID, or you can supply it
+using the `--slack-team TEAM_ID` command-line option.  You must run
+the automations in a Slack team of which you are a member.  You can
+get the Slack team ID by typing `team` in a DM to the Atomist Bot.
 
-> *The Slack team ID for atomist-playground is `T7GMF5USG`.*
+> _The Slack team ID for atomist-playground is `T7GMF5USG`._
 
-The `atomist-config` script will prompt you for your GitHub
-credentials.  It needs them to create the GitHub personal access
-token.  Atomist does not store your credentials and only writes the
-token to your local machine.
+The script will prompt you for your GitHub credentials.  It needs them
+to create the GitHub personal access token.  Atomist does not store
+your credentials and only writes the generated token to your local
+machine.
 
 The Atomist API client authenticates using a GitHub personal access
 token.  The Atomist API uses the token to confirm you are who you say
-you are and are in a GitHub org connected to the Slack team in which
-you are running the automations.  In addition, the Atomist API only
-allows members of the GitHub team `atomist-automation` to authenticate
-and register a new client.  You will have to create a team in your
-GitHub organization named `atomist-automation` and add the users who
-want to create and register automations to it.
-
-> *If you followed the instructions above and have been invited to
-> the [atomist-playground][play-gh] GitHub organization, you will have
-> been added to this team in that organization.*
+you are and are in a GitHub organization connected to the Slack team
+in which you are running the automations.  In addition, it uses the
+token when performing any operations that access the GitHub API.
 
 [token]: https://github.com/settings/tokens (GitHub Personal Access Tokens)
 

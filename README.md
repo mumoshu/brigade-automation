@@ -207,12 +207,13 @@ You will need to install [node][] to build and test this project.
 
 Command | Reason
 ------- | ------
-`npm install` | to install all the required packages
-`npm start` | to start the Atomist automation client
+`npm install` | install all the required packages
+`npm run build` | lint, compile, and test
+`npm start` | start the Atomist automation client
 `npm run autostart` | run the client, refreshing when files change
-`npm run lint` | to run tslint against the TypeScript
-`npm run compile` | to compile all TypeScript into JavaScript
-`npm test` | to run tests and ensure everything is working
+`npm run lint` | run tslint against the TypeScript
+`npm run compile` | compile all TypeScript into JavaScript
+`npm test` | run tests and ensure everything is working
 `npm run autotest` | run tests continuously
 `npm run clean` | remove stray compiled JavaScript files and build directory
 

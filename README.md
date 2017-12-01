@@ -241,5 +241,5 @@ the contents of the release notes.
 Created by [Atomist][atomist].
 Need Help?  [Join our Slack team][slack].
 
-[atomist]: https://www.atomist.com/
-[slack]: https://join.atomist.com
+[atomist]: https://atomist.com/ (Atomist - Development Automation)
+[slack]: https://join.atomist.com/  (Atomist Community Slack)

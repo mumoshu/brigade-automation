@@ -17,9 +17,6 @@
 import { Configuration } from "@atomist/automation-client";
 import * as appRoot from "app-root-path";
 
-import { HelloWorld } from "./commands/HelloWorld";
-import { NotifyOnPush } from "./events/NotifyOnPush";
-
 // tslint:disable-next-line:no-var-requires
 const pj = require(`${appRoot}/package.json`);
 
@@ -30,12 +27,6 @@ export const configuration: Configuration = {
     version: pj.version,
     keywords: ["atomist", "seed"],
     teamIds: [], // <-- run `@atomist team` in your slack team to obtain the team id
-    commands: [
-        () => new HelloWorld(),
-    ],
-    events: [
-        () => new NotifyOnPush(),
-    ],
     token,
     http: {
         enabled: true,

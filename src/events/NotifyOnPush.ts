@@ -35,7 +35,7 @@ import * as graphql from "../typings/types";
 export class NotifyOnPush implements HandleEvent<graphql.PushWithRepo.Subscription> {
 
     public handle(e: EventFired<graphql.PushWithRepo.Subscription>, ctx: HandlerContext): Promise<HandlerResult> {
-        logger.info(`incoming event is ${JSON.stringify(e.data)}`);
+        logger.debug(`incoming event is ${JSON.stringify(e.data)}`);
 
         return Promise.all(e.data.Push.map(p => {
             if (p.repo && p.repo.channels && p.repo.channels.length > 0) {

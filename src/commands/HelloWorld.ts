@@ -50,7 +50,7 @@ export class HelloWorld implements HandleCommand {
     public slackUser: string;
 
     public handle(ctx: HandlerContext): Promise<HandlerResult> {
-        logger.info(`incoming parameter was ${this.name}`);
+        logger.debug(`incoming parameter was ${this.name}`);
 
         if (!ctx.graphClient) {
             return Promise.resolve(Success);

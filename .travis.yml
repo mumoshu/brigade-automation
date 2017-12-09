@@ -6,6 +6,7 @@ node_js:
 branches:
   except:
   - "/\\+travis\\.\\d+$/"
+  - "/^\\d+\\.\\d+\\.\\d+-\\d+$/"
 env:
   global:
   - NPM_REGISTRY=https://atomist.jfrog.io/atomist/api/npm/npm-dev-local
@@ -28,11 +29,15 @@ cache:
   directories:
   - "$HOME/.npm"
 deploy:
-  provider: releases
-  api_key:
-    secure: JDc7PWRojyu6v9SWwvmwe41VjmLPubW9s7pMXyfuqlU5sH939fJok2UyFkm6y7qSZ5UxxwFB/cGNlOLcZtQORP3UJ0m9ale+E0d5ViuHy1A/Y6d+AQCreiY8JXCeT5RY604COqPkrivFSJ4wM+4N6e2S3+qg2rlw28jI776lSCE1hthq1rb4ljD3erXaw2bhAAykcrPwPurcPVngOZOEV3kOPf4m2ExCkUR4IcmV9bGizC/s9WD7cUKE2YVVAwHDgXUeKTu251y9apopgxvRaXo9XA+ZcouSJwgHUOmUBYIFhP0rUkmhrpMuyyEfyZVLPF9hOtm/7dWSPov5F4RRKzd0DqHDGgNIUKMQIYqtiG8bttFlEAzCkWzrv5PU/texRS4R5NQPbGuGvWe92Lzviedcv6Bf5ihhupMb8S1mfpAiuMB/6Tc8sGjZtt0NkBJ7l1POON6wgoX+LvOpOm582Ps+gpDWXvF99bozbayQicbEslqEZlsdLQGZYSaZ8wdNGH3Y+g/gQLLmfOhyzKkCEqEZT6EA92QlOxux0oN1P4dKP2qImI8or9hHwjroPMTUJ2pRvGqdfKLI7DHnw+TbPYsrOyVyvGWbBaVDc9IwcgeqUP+daogUKsKzEH3lspEaPYmIL1zZyP8hQRF3xgnDF9BYJZZTAYXe31M7O3GN7OM=
+- provider: pages
+  skip_cleanup: true
+  github_token: "$GITHUB_TOKEN"
+  local_dir: build/typedoc
   on:
     tags: true
     condition: "$TRAVIS_TAG =~ ^[0-9]+\\.[0-9]+\\.[0-9]+(-(m|rc)\\.[0-9]+)?$"
-after_deploy:
-- bash scripts/gh-publish.bash $TRAVIS_REPO_SLUG
+- provider: releases
+  api_key: "$GITHUB_TOKEN"
+  on:
+    tags: true
+    condition: "$TRAVIS_TAG =~ ^[0-9]+\\.[0-9]+\\.[0-9]+(-(m|rc)\\.[0-9]+)?$"

@@ -312,7 +312,7 @@ function main () {
             return 1
         fi
         local prerelease_version pkg_json=package.json
-        prerelease_version=$(jq -er --raw-output .version "$pkg_json")
+        prerelease_version=$(jq -er .version "$pkg_json")
         if [[ $? -ne 0 || ! $prerelease_version ]]; then
             err "failed to parse version from $pkg_json: $prerelease_version"
             return 1

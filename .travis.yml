@@ -6,7 +6,7 @@ node_js:
 branches:
   except:
   - "/\\+travis\\.\\d+$/"
-  - "/^\\d+\\.\\d+\\.\\d+-\\d+$/"
+  - "/^\\d+\\.\\d+\\.\\d+-.*\\d+$/"
 env:
   global:
   - NPM_REGISTRY=https://atomist.jfrog.io/atomist/api/npm/npm-dev-local

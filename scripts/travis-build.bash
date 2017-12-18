@@ -4,7 +4,7 @@
 set -o pipefail
 
 declare Pkg=travis-build-node
-declare Version=1.1.0
+declare Version=1.1.1
 
 # write message to standard out (stdout)
 # usage: msg MESSAGE
@@ -79,7 +79,7 @@ function set-timestamp-version () {
         return 1
     fi
     local project_version=$pkg_version-$prerelease$timestamp
-    if ! npm version "$project_version"; then
+    if ! npm version --git-tag-version false "$project_version"; then
         err "failed to set package version: $project_version"
         return 1
     fi

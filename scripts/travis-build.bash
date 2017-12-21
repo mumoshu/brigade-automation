@@ -114,6 +114,59 @@ function npm-publish () {
     done
 }
 
+# post a status on a commit
+# usage: git-status [CONTEXT [DESCRIPTION [URL [STATE]]]]
+function git-status () {
+    local context=$1
+    if [[ $context ]]; then
+        shift
+    else
+        context=default
+    fi
+    local description=$1
+    if [[ $description ]]; then
+        shift
+    fi
+    local target_url=$1
+    if [[ $target_url ]]; then
+        shift
+    fi
+    local state=$1
+    if [[ $state ]]; then
+        shift
+        case "$state" in
+            error | failure | pending | success)
+                :;;
+            *)
+                err "invalid commit status state: '$state'"
+                return 10
+                ;;
+        esac
+
+    else
+        state=success
+    fi
+
+    local sha
+    if [[ $TRAVIS_PULL_REQUEST_SHA ]]; then
+        sha=$TRAVIS_PULL_REQUEST_SHA
+    else
+        sha=$TRAVIS_COMMIT
+    fi
+
+    local status_url=https://api.github.com/repos/$TRAVIS_REPO_SLUG/statuses/$sha
+    local post_data
+    printf -v post_data '{"state":"%s","target_url":"%s","description":"%s","context":"%s"}' "$state" "$target_url" "$description" "$context"
+    if ! curl -s -f -H 'Accept: application/vnd.github.v3+json' \
+            -H 'Content-Type: application/json' \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -X POST -d "$post_data" "$status_url" > /dev/null
+    then
+        err "failed to post status on commit: $sha"
+        return 1
+    fi
+}
+
 # publish a public prerelease version to non-standard registry
 # usage: npm-publish-prerelease [BRANCH]
 function npm-publish-prerelease () {
@@ -135,32 +188,18 @@ function npm-publish-prerelease () {
         return 1
     fi
 
-    local sha
-    if [[ $TRAVIS_PULL_REQUEST_SHA ]]; then
-        sha=$TRAVIS_PULL_REQUEST_SHA
-    else
-        sha=$TRAVIS_COMMIT
-    fi
-
     local pkg_name pkg_json=package.json
     pkg_name=$(jq -er .name "$pkg_json")
     if [[ $? -ne 0 || ! $pkg_name ]]; then
         err "failed to parse NPM package name from '$pkg_json'"
         return 1
     fi
+
     local pkg_url=https://atomist.jfrog.io/atomist/npm-dev/$pkg_name/-/$pkg_name-$pkg_version.tgz
-    local status_url=https://api.github.com/repos/$TRAVIS_REPO_SLUG/statuses/$sha
-    local post_data
-    printf -v post_data '{"state":"success","target_url":"%s","description":"Pre-release NPM module publication","context":"npm/atomist/prerelease"}' "$pkg_url"
-    if ! curl -s -H 'Accept: application/vnd.github.v3+json' \
-            -H 'Content-Type: application/json' \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -X POST -d "$post_data" "$status_url" > /dev/null
-    then
-        err "failed to post status on commit: $sha"
+    if ! git-status npm/atomist/prerelease "Pre-release NPM package publication" "$pkg_url"; then
+        err "failed to create GitHub commit status for NPM package pre-release"
         return 1
     fi
-    msg "posted module URL '$pkg_url' to commit status '$status_url'"
 }
 
 # create and push a Docker image
@@ -201,7 +240,10 @@ function docker-push () {
         return 1
     fi
 
-    msg "built and pushed Docker image"
+    if ! git-status docker/atomist "Docker image tag" "$tag"; then
+       err "failed to create GitHub commit status for Docker image tag '$tag'"
+       return 1
+    fi
 }
 
 # push app to Cloud Foundry
@@ -334,8 +376,6 @@ function main () {
                 err "failed to push '$staging_app' to Cloud Foundry"
                 return 1
             fi
-        fi
-        if [[ $TRAVIS_BRANCH == master ]]; then
             if ! git-tag "$prerelease_version" "$prerelease_version+travis.$TRAVIS_BUILD_NUMBER"; then
                 return 1
             fi

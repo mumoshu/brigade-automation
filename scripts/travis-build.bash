@@ -4,7 +4,7 @@
 set -o pipefail
 
 declare Pkg=travis-build-node
-declare Version=1.1.1
+declare Version=1.2.0
 
 # write message to standard out (stdout)
 # usage: msg MESSAGE
@@ -335,8 +335,14 @@ function main () {
                 return 1
             fi
         fi
-        if ! git-tag "$prerelease_version" "$prerelease_version+travis.$TRAVIS_BUILD_NUMBER"; then
-            return 1
+        if [[ $TRAVIS_BRANCH == master ]]; then
+            if ! git-tag "$prerelease_version" "$prerelease_version+travis.$TRAVIS_BUILD_NUMBER"; then
+                return 1
+            fi
+        else
+            if ! git-tag "$prerelease_version+travis.$TRAVIS_BUILD_NUMBER"; then
+                return 1
+            fi
         fi
     fi
 }

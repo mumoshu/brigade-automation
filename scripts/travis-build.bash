@@ -242,8 +242,8 @@ function docker-push () {
 
     # github commit status requires an http(s) URL, so prepend tag with that
     if ! git-status docker/atomist "Docker image tag" "https://$tag"; then
-       err "failed to create GitHub commit status for Docker image tag '$tag'"
-       return 1
+        err "failed to create GitHub commit status for Docker image tag '$tag'"
+        return 1
     fi
 }
 

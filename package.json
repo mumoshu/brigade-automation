@@ -18,7 +18,7 @@
     "seed"
   ],
   "dependencies": {
-    "@atomist/automation-client": "^0.5.0",
+    "@atomist/automation-client": "^0.5.2",
     "app-root-path": "^2.0.1"
   },
   "devDependencies": {
@@ -50,16 +50,16 @@
     "clean": "npm-run-all clean:js clean:build",
     "clean:build": "rimraf *-v8.log profile.txt build",
     "clean:dist": "npm-run-all clean clean:npm",
-    "clean:js": "rimraf '{src,test}/**/*.js'",
+    "clean:js": "rimraf \"{src,test}/**/*.js\"",
     "clean:npm": "rimraf node_modules",
     "compile": "npm-run-all git:info compile:gql compile:ts",
     "compile:gql": "npm-run-all gql:gen gql:copy",
     "compile:ts": "tsc --project .",
     "fmt": "tsfmt --replace",
     "git:info": "atomist git",
-    "gql:copy": "copyfiles 'src/**/*.graphql' build",
+    "gql:copy": "copyfiles \"src/**/*.graphql\" build",
     "gql:gen": "gql-gen --file node_modules/@atomist/automation-client/graph/schema.cortex.json --template typescript --no-schema --out src/typings \"{graphql,src}/**/*.graphql\"",
-    "lint": "tslint --format verbose --project . --exclude '{build,node_modules}/**' '**/*.ts'",
+    "lint": "tslint --format verbose --project . --exclude \"{build,node_modules}/**\" \"**/*.ts\"",
     "lint:fix": "npm run lint -- --fix",
     "start": "atomist start --no-install --no-compile",
     "test": "mocha --require espower-typescript/guess \"test/**/*.ts\"",

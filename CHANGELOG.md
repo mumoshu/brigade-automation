@@ -7,13 +7,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][]
 
-[Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.2.0...HEAD
+[Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.3.0...HEAD
+
+## [0.3.0][] - 2018-01-08
+
+[0.3.0]: https://github.com/atomist/automation-seed-ts/compare/0.2.0...0.3.0
+
+Portable Release
 
 ### Changed
 
 -   Add no-install and no-compile options to `atomist start`
 -   Use handler discovery rather than listing in atomist.config.ts
 -   Updated TypeDoc generation
+-   Make package scripts more standardized and portable
 
 ## [0.2.0][] - 2017-11-22
 

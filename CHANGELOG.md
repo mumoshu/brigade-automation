@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][]
 
-[Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.3.0...HEAD
+[Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.4.0...HEAD
+
+## [0.4.0][] - 2018-01-17
+
+[0.4.0]: https://github.com/atomist/automation-seed-ts/compare/0.2.0...0.4.0
+
+Build Release
+
+### Changed
+
+-   Improve Docker handling in Travis CI build script
+-   Update package scripts to use `atomist gql-gen` to generate
+    TypeScript from GraphQL
 
 ## [0.3.0][] - 2018-01-08
 

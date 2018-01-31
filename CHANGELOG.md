@@ -13,11 +13,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 -   Travis CI build script sets local git config
 -   Change autostart package script to avoid zombie processes
+-   Travis CI build script does not npm publish by default, set
+    NPM_PUBLISH environment variable to enable it
 
 ### Added
 
 -   Travis CI build script can link Docker images to commits in
     Atomist
+-   Travis CI build script can publish to S3 buckets
 
 ## [0.4.0][] - 2018-01-17
 

@@ -1,10 +1,10 @@
 #!/bin/bash
-# build and test a node package
+# build and test a node package on Travis CI
 
 set -o pipefail
 
 declare Pkg=travis-build-node
-declare Version=1.4.2
+declare Version=1.5.0
 
 # write message to standard out (stdout)
 # usage: msg MESSAGE
@@ -88,6 +88,11 @@ function set-timestamp-version () {
 # npm publish
 # usage: npm-publish [NPM_PUBLISH_ARGS]...
 function npm-publish () {
+    if [[ ! $NPM_PUBLISH ]]; then
+        msg "NPM_PUBLISH not set, skipping npm publish"
+        return 0
+    fi
+
     if ! cp -r build/src/* .; then
         err "packaging module failed"
         return 1
@@ -268,7 +273,7 @@ function docker-push () {
     fi
 
     local tag=$DOCKER_REGISTRY/$image_name:$image_version
-    if ! docker build . -t "$tag"; then
+    if ! docker build -t "$tag" .; then
         err "failed to build docker image: '$tag'"
         return 1
     fi
@@ -318,6 +323,22 @@ function cf-push () {
     fi
 }
 
+# sync build to S3 bucket
+# usage: s3-sync BUCKET
+function s3-sync () {
+    local bucket=$1
+    if [[ ! $bucket ]]; then
+        err "s3-sync: missing required argument: BUCKET"
+        return 10
+    fi
+    shift
+
+    if ! s3cmd sync --delete-removed public/ "s3://$bucket/"; then
+        err "failed to sync public directory to s3 bucket '$bucket'"
+        return 1
+    fi
+}
+
 # usage: main "$@"
 function main () {
     local arg ignore_lint
@@ -339,10 +360,12 @@ function main () {
         return 1
     fi
 
-    msg "running tests"
-    if ! npm test; then
-        err "test failed"
-        return 1
+    if [[ -d test ]]; then
+        msg "running tests"
+        if ! npm test; then
+            err "test failed"
+            return 1
+        fi
     fi
 
     msg "running lint"
@@ -383,6 +406,14 @@ function main () {
             err "failed to build and push docker image"
             return 1
         fi
+        if [[ $S3_BUCKET_BASE ]]; then
+            msg "syncing public directory to S3"
+            local bucket=$S3_BUCKET_BASE.atomist.com
+            if ! s3-sync "$bucket"; then
+                err "failed to sync public directory to S3 bucket '$bucket'"
+                return 1
+            fi
+        fi
         msg "pushing app to Cloud Foundry"
         if ! cf-push "$app"; then
             err "failed to push '$app' to Cloud Foundry"
@@ -399,7 +430,7 @@ function main () {
         local prerelease_version pkg_json=package.json
         prerelease_version=$(jq -er .version "$pkg_json")
         if [[ $? -ne 0 || ! $prerelease_version ]]; then
-            err "failed to parse version from $pkg_json: $prerelease_version"
+            err "failed to parse version from $pkg_json: '$prerelease_version'"
             return 1
         fi
         msg "publishing NPM package version '$prerelease_version'"
@@ -409,11 +440,19 @@ function main () {
         fi
         msg "building and pushing Docker image"
         if ! docker-push "$app" "$prerelease_version"; then
-            err "failed to build and push docker image"
+            err "failed to build and push docker image for '$app' version '$prerelease_version'"
             return 1
         fi
         if [[ $TRAVIS_BRANCH == master ]]; then
             local staging_app=$app-staging
+            if [[ $S3_BUCKET_BASE ]]; then
+                msg "syncing public directory to S3"
+                local bucket=$S3_BUCKET_BASE-staging.atomist.services
+                if ! s3-sync "$bucket"; then
+                    err "failed to sync public directory to S3 bucket '$bucket'"
+                    return 1
+                fi
+            fi
             msg "pushing staging app to Cloud Foundry development space"
             if ! cf-push "$staging_app" development; then
                 err "failed to push '$staging_app' to Cloud Foundry"

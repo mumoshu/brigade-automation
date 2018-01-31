@@ -9,9 +9,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.4.0...HEAD
 
+### Changed
+
+-   Travis CI build script sets local git config
+-   Change autostart package script to avoid zombie processes
+
+### Added
+
+-   Travis CI build script can link Docker images to commits in
+    Atomist
+
 ## [0.4.0][] - 2018-01-17
 
-[0.4.0]: https://github.com/atomist/automation-seed-ts/compare/0.2.0...0.4.0
+[0.4.0]: https://github.com/atomist/automation-seed-ts/compare/0.3.0...0.4.0
 
 Build Release
 

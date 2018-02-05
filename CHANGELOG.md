@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.6.0...HEAD
 
+## [0.6.0][] - 2018-02-05
+
+[0.6.0]: https://github.com/atomist/automation-seed-ts/compare/0.5.0...0.6.0
+
+Docker release
+
+### Added
+
+-   Docker build and publish
+
 ### Changed
 
 -   Moved GraphQL files under src

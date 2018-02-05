@@ -7,13 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][]
 
-[Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.5.0...HEAD
+[Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.6.0...HEAD
 
-## [0.5.0][] - 2018-01-17
+### Fixed
+
+-   Fix autotest package script
+
+## [0.5.0][] - 2018-01-31
 
 [0.5.0]: https://github.com/atomist/automation-seed-ts/compare/0.4.0...0.5.0
 
-Autostart Release
+Autostart release
 
 ### Changed
 
@@ -32,7 +36,7 @@ Autostart Release
 
 [0.4.0]: https://github.com/atomist/automation-seed-ts/compare/0.3.0...0.4.0
 
-Build Release
+Build release
 
 ### Changed
 
@@ -44,7 +48,7 @@ Build Release
 
 [0.3.0]: https://github.com/atomist/automation-seed-ts/compare/0.2.0...0.3.0
 
-Portable Release
+Portable release
 
 ### Changed
 
@@ -57,7 +61,7 @@ Portable Release
 
 [0.2.0]: https://github.com/atomist/automation-seed-ts/compare/0.1.0...0.2.0
 
-Update Release
+Update release
 
 ### Changed
 
@@ -69,7 +73,7 @@ Update Release
 
 ## [0.1.0][] - 2017-10-12
 
-Initial Release
+Initial release
 
 [0.1.0]: https://github.com/atomist/automation-seed-ts/tree/0.1.0
 

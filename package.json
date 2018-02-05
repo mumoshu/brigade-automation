@@ -1,6 +1,6 @@
 {
   "name": "@atomist/automation-seed",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Atomist automation seed project",
   "author": "Atomist",
   "license": "Apache-2.0",
@@ -30,10 +30,11 @@
     "espower-typescript": "^8.0.2",
     "graphql-code-generator": "^0.8.13",
     "mocha": "^3.5.3",
-    "nodemon": "^1.14.11",
+    "nodemon": "^1.14.12",
     "npm-run-all": "^4.1.1",
     "power-assert": "^1.4.4",
     "rimraf": "^2.6.2",
+    "supervisor": "^0.12.0",
     "ts-node": "^3.3.0",
     "tslint": "^5.9.1",
     "typedoc": "^0.9.0",
@@ -44,8 +45,8 @@
     "test": "test"
   },
   "scripts": {
-    "autostart": "nodemon --exec ts-node --watch build --ext ts -- node_modules/@atomist/automation-client/start.client.js",
-    "autotest": "nodemon --watch src,test --extensions ts --no-restart-on exit --quiet --exec npm -- test",
+    "autostart": "nodemon --watch build --ext ts --exec ts-node -- node_modules/@atomist/automation-client/start.client.js",
+    "autotest": "supervisor --watch src,test --extensions ts --no-restart-on exit --quiet --exec npm -- test",
     "build": "npm-run-all lint compile test",
     "clean": "npm-run-all clean:js clean:build",
     "clean:build": "rimraf *-v8.log profile.txt build",

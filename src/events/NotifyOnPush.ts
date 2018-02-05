@@ -30,7 +30,8 @@ import {
 
 import * as graphql from "../typings/types";
 
-@EventHandler("notify repo channels when there is a push", GraphQL.subscriptionFromFile("graphql/push"))
+@EventHandler("notify repo channels when there is a push",
+    GraphQL.subscriptionFromFile("../graphql/push", __dirname))
 @Tags("push", "notification")
 export class NotifyOnPush implements HandleEvent<graphql.PushWithRepo.Subscription> {
 

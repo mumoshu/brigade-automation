@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.6.0...HEAD
 
+### Changed
+
+-   Moved GraphQL files under src
+
 ### Fixed
 
 -   Fix autotest package script

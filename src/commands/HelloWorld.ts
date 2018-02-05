@@ -56,8 +56,8 @@ export class HelloWorld implements HandleCommand {
             return Promise.resolve(Success);
         }
 
-        return ctx.graphClient.executeQueryFromFile<Person.Query, Person.Variables>("graphql/person",
-            { teamId: ctx.teamId, slackUser: this.slackUser })
+        return ctx.graphClient.executeQueryFromFile<Person.Query, Person.Variables>("../graphql/person",
+            { teamId: ctx.teamId, slackUser: this.slackUser }, undefined, __dirname)
             .then(result => {
                 if (result && result.ChatTeam && result.ChatTeam[0] && result.ChatTeam[0].members &&
                     result.ChatTeam[0].members[0] && result.ChatTeam[0].members[0].person) {

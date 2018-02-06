@@ -67,7 +67,7 @@ new approach to writing and running automations.
 You will need to have [Node.js][node] installed.  To verify that the
 right versions are installed, please run:
 
-```
+```console
 $ node -v
 v8.4.0
 $ npm -v
@@ -84,7 +84,7 @@ be 5 or greater.
 To get started run the following commands to clone the project,
 install its dependencies, and build the project:
 
-```
+```console
 $ git clone git@github.com:atomist/automation-seed-ts.git
 $ cd automation-seed-ts
 $ npm install
@@ -97,7 +97,7 @@ If this is the first time you will be running an Atomist API client
 locally, you should first configure your system using the `atomist`
 script:
 
-```
+```console
 $ `npm bin`/atomist config
 ```
 
@@ -130,14 +130,14 @@ You can run this repository locally, allowing you to change the source
 code of this project and immediately see the effects in your environment
 with the following command
 
-```
+```console
 $ npm run autostart
 ```
 
 To run in a more traditional manner, build the project and then simple
 start it.
 
-```
+```console
 $ npm run build
 $ npm start
 ```
@@ -145,7 +145,7 @@ $ npm start
 To download and run the Docker image of this project, run the
 following command
 
-```
+```console
 $ docker run --rm -e GITHUB_TOKEN=YOUR_TOKEN -e ATOMIST_TEAM=TEAM_ID \
     atomist/automation-seed-ts:VERSION
 ```
@@ -155,6 +155,16 @@ your `~/.atomist/client.config.json` created by the `atomist config`
 command and `VERSION` with the [latest release of this repo][latest].
 Note that this will not be running any code from your local machine
 but the code in the Docker image.
+
+To run the Docker image in a Kubernetes cluster, you can use the
+[deployment spec](automation-seed-deployment.json) from this
+repository, replacing `YOUR_TOKEN`, `TEAM_ID` (twice!), and `VERSION`
+in the spec as above in the Docker run command, and running the
+following command
+
+```console
+$ kubectl create -f automation-seed-deployment.json
+```
 
 [latest]: https://github.com/atomist/automation-seed-ts/releases/latest
 
@@ -253,7 +263,7 @@ in the package.json must be the same as the tag.  For example:
 
 [semver]: http://semver.org
 
-```
+```console
 $ npm version 1.2.3
 $ git tag -a -m 'The ABC release' 1.2.3
 $ git push origin 1.2.3

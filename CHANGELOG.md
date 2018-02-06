@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.6.0...HEAD
 
+### Added
+
+-   Kubernetes deployment specification and instructions
+
 ### Fixed
 
 -   Docker CMD
@@ -21,7 +25,7 @@ Docker release
 
 ### Added
 
--   Docker build and publish
+-   Docker build and push
 
 ### Changed
 

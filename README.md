@@ -126,11 +126,37 @@ token when performing any operations that access the GitHub API.
 
 ## Starting up the automation-client
 
-To start the client, run the following command:
+You can run this repository locally, allowing you to change the source
+code of this project and immediately see the effects in your environment
+with the following command
 
 ```
 $ npm run autostart
 ```
+
+To run in a more traditional manner, build the project and then simple
+start it.
+
+```
+$ npm run build
+$ npm start
+```
+
+To download and run the Docker image of this project, run the
+following command
+
+```
+$ docker run --rm -e GITHUB_TOKEN=YOUR_TOKEN -e ATOMIST_TEAM=TEAM_ID \
+    atomist/automation-seed-ts:VERSION
+```
+
+replacing `YOUR_TOKEN` and `TEAM_ID` with the token and team ID from
+your `~/.atomist/client.config.json` created by the `atomist config`
+command and `VERSION` with the [latest release of this repo][latest].
+Note that this will not be running any code from your local machine
+but the code in the Docker image.
+
+[latest]: https://github.com/atomist/automation-seed-ts/releases/latest
 
 ## Invoking a command handler from Slack
 

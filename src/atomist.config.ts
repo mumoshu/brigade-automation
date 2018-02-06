@@ -21,12 +21,14 @@ import * as appRoot from "app-root-path";
 const pj = require(`${appRoot}/package.json`);
 
 const token = process.env.GITHUB_TOKEN;
+const team = process.env.ATOMIST_TEAM;
+const teamIds = (team) ? [team] : [];
 
 export const configuration: Configuration = {
     name: pj.name,
     version: pj.version,
     keywords: ["atomist", "seed"],
-    teamIds: [], // <-- run `@atomist team` in your slack team to obtain the team id
+    teamIds,
     token,
     http: {
         enabled: true,

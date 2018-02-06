@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.6.0...HEAD
 
+### Fixed
+
+-   Docker CMD
+
 ## [0.6.0][] - 2018-02-05
 
 [0.6.0]: https://github.com/atomist/automation-seed-ts/compare/0.5.0...0.6.0

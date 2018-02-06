@@ -4,7 +4,7 @@
 set -o pipefail
 
 declare Pkg=travis-build-node
-declare Version=1.5.0
+declare Version=1.5.1
 
 # write message to standard out (stdout)
 # usage: msg MESSAGE
@@ -98,17 +98,9 @@ function npm-publish () {
         return 1
     fi
 
-    # npm honors this
-    rm -f .gitignore
-
     if ! npm publish "$@"; then
         err "failed to publish node package"
         cat "$(ls -t "$HOME"/.npm/_logs/*-debug.log | head -n 1)"
-        return 1
-    fi
-
-    if ! git checkout -- .gitignore; then
-        err "removed .gitignore and was unable to check out original"
         return 1
     fi
 

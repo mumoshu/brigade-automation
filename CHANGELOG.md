@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][]
 
-[Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.6.0...HEAD
+[Unreleased]: https://github.com/atomist/automation-seed-ts/compare/0.7.0...HEAD
+
+## [0.7.0][] - 2018-02-06
+
+[0.7.0]: https://github.com/atomist/automation-seed-ts/compare/0.6.0...0.7.0
+
+Kubernetes release
 
 ### Added
 

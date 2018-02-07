@@ -47,7 +47,7 @@
   "scripts": {
     "autostart": "nodemon --watch build --ext ts --exec ts-node -- node_modules/@atomist/automation-client/start.client.js",
     "autotest": "supervisor --watch src,test --extensions ts --no-restart-on exit --quiet --exec npm -- test",
-    "build": "npm-run-all lint compile test",
+    "build": "npm-run-all lint compile test typedoc",
     "clean": "npm-run-all clean:js clean:build",
     "clean:build": "rimraf *-v8.log profile.txt build",
     "clean:dist": "npm-run-all clean clean:npm",

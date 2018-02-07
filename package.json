@@ -3,7 +3,7 @@
   "version": "0.7.1",
   "description": "Atomist automation seed project",
   "author": "Atomist",
-  "license": "GPL-3.0-or-later",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
     "url": "https://github.com/atomist/automation-seed-ts.git"

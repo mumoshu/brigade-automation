@@ -1,5 +1,7 @@
 FROM node:9
 
+MAINTAINER David Dooling <david@atomist.com>
+
 ENV DUMB_INIT_VERSION=1.2.1
 
 RUN curl -s -L -O https://github.com/Yelp/dumb-init/releases/download/v$DUMB_INIT_VERSION/dumb-init_${DUMB_INIT_VERSION}_amd64.deb \

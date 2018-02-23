@@ -27,7 +27,7 @@ const teamIds = (team) ? [team] : [];
 export const configuration: Configuration = {
     name: pj.name,
     version: pj.version,
-    keywords: pj.keyowrds,
+    keywords: pj.keywords,
     teamIds,
     token,
     http: {

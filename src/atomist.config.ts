@@ -27,7 +27,7 @@ const teamIds = (team) ? [team] : [];
 export const configuration: Configuration = {
     name: pj.name,
     version: pj.version,
-    keywords: ["atomist", "seed"],
+    keywords: pj.keyowrds,
     teamIds,
     token,
     http: {

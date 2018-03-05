@@ -15,6 +15,27 @@ module to implement a local client that connects to the Atomist API.
 
 [client]: https://github.com/atomist/automation-client-ts (@atomist/automation-client Node Module)
 
+## Using edge atomist libraries
+
+In your package.json:
+
+```
+"dependencies": {
+    "@atomist/automation-client": "^0.6.7-20180304171840",
+    "app-root-path": "^2.0.1"
+  },
+```
+
+Point npm to fetch edge atomist libraries from atomist's development npm repository:
+
+```
+npm config set @atomist:registry https://atomist.jfrog.io/atomist/api/npm/npm-dev/
+
+npm install
+```
+
+See https://atomist.jfrog.io/atomist/webapp/#/artifacts/browse/tree/General/npm-dev-local/@atomist/automation-client/-/@atomist/automation-client-0.6.7-20180304171840.tgz for more info.
+
 ## Prerequisites
 
 Below are brief instructions on how to get started running this

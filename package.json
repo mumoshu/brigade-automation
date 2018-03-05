@@ -18,11 +18,13 @@
     "seed"
   ],
   "dependencies": {
-    "@atomist/automation-client": "^0.6.6",
-    "app-root-path": "^2.0.1"
+    "@atomist/automation-client": "^0.6.7-20180304171840",
+    "app-root-path": "^2.0.1",
+    "config": "^1.28.1"
   },
   "devDependencies": {
     "@types/app-root-path": "^1.2.4",
+    "@types/config": "^0.0.34",
     "@types/mocha": "^2.2.48",
     "@types/node": "^9.4.1",
     "@types/power-assert": "^1.4.29",
@@ -71,7 +73,7 @@
     "typedoc": "typedoc --mode modules --excludeExternals --out build/typedoc src"
   },
   "engines": {
-    "node": "9.x.x",
+    "node": "8.x.x",
     "npm": "5.x.x"
   }
 }

@@ -61,6 +61,7 @@
     "compile": "npm-run-all git:info compile:gql compile:ts",
     "compile:gql": "npm-run-all gql:schema gql:gen gql:copy",
     "compile:ts": "tsc --project .",
+    "docker:run": "image=mumoshu:gitops-brigade-automation; docker build -t $image .; docker run --rm -it -e GITHUB_TOKEN -e ATOMIST_TEAM $image",
     "fmt": "tsfmt --replace",
     "git:info": "atomist git",
     "gql:copy": "copyfiles \"src/**/*.graphql\" build",

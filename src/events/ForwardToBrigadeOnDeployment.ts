@@ -35,15 +35,12 @@ import * as graphql from "../typings/types";
 @EventHandler("forward to brigade when there is a deployment",
     /*GraphQL.subscriptionFromFile("../graphql/deployment", __dirname)*/`
 subscription DeploymentIngester {
-    DeploymentEvent {
-        Deployment {
+    DeploymentEventV1 {
+        deployment {
             id
             sha
             ref
             task
-            payload {
-                foo
-            }
             creator {
                 login
                 type

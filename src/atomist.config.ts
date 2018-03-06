@@ -21,7 +21,7 @@ import * as config from "config";
 // as seen in:
 // - https://github.com/atomist/automation-client-ts/blob/master/src/index.ts
 // - https://github.com/atomist/automation-client-ts/blob/master/src/ingesters.ts
-import { DeploymentEvent } from "./events/deploymentIngester";
+import { DeploymentEventV1 } from "./events/deploymentIngester";
 
 import * as appRoot from "app-root-path";
 
@@ -40,7 +40,7 @@ export const configuration: Configuration = {
     teamIds,
     token,
     ingesters: [
-        DeploymentEvent,
+        DeploymentEventV1,
         // See ingesters.ts for available types and functions
         // - https://github.com/atomist/automation-client-ts/blob/master/src/ingesters.ts#L139
         // See automation-client-ts sources for examples of custom ingester

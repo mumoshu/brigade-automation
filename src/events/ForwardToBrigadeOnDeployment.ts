@@ -30,6 +30,8 @@ import {
 
 import * as graphql from "../typings/types";
 
+import { execufy } from "../util/execufy";
+
 // @see https://github.com/atomist/automation-client-ts/blob/master/test/event/HelloWorld.ts for example
 
 @EventHandler("forward to brigade when there is a deployment",
@@ -41,6 +43,7 @@ subscription DeploymentIngester {
             sha
             ref
             task
+            environment
             creator {
                 login
                 type
@@ -67,16 +70,26 @@ export class ForwardToBrigadeOnDeploymentIngester implements HandleEvent<any> {
     public handle(e: EventFired<any>, ctx: HandlerContext): Promise<HandlerResult> {
         logger.debug(`incoming event is ${JSON.stringify(e.data)}`);
 
-        const events: any[] = e.data.DeploymentEvent;
-        return Promise.all(events.map(e2 => {
-            const p = e2.Deployment;
-            if (p.sha) {
-                return ctx.messageClient.addressChannels(`Got a deployment with sha \`${p.sha}\``,
-                    ["#atomist-playground"]);
-            } else {
-                return Success;
-            }
-        }))
+        const events: graphql.DeploymentIngester.DeploymentEventV1[] = e.data.DeploymentEventV1;
+        const notification: graphql.DeploymentIngester.DeploymentEventV1 = events[0];
+        const deployment: graphql.DeploymentIngester.Deployment = notification.deployment;
+        const msg = `Got a deployment to env \`${deployment.environment}\` with sha \`${deployment.sha}\``;
+        const notifySlack = ctx.messageClient.addressChannels(msg, ["#atomist-playground"]);
+
+        return notifySlack
+            .then(brigRun.bind(null, "deis/empty-testbed", "push"))
+            .then(m => {
+                return ctx.messageClient.addressChannels(m, ["#atomist-playground"]);
+            })
             .then(success, failure);
     }
+}
+
+function brigRun(project: string, event: string): Promise<string> {
+    return Promise.all(
+        [execufy(`brig run ${project} -e ${event}`, "failed.")]).then(values => {
+        const [result] = values;
+        return Promise.resolve(
+            `brig run: ${result}`);
+    });
 }

@@ -1,0 +1,27 @@
+subscription DeploymentIngester {
+  DeploymentEventV1 {
+    deployment {
+      id
+      sha
+      ref
+      task
+      environment
+      creator {
+        login
+        type
+      }
+    }
+    repository {
+      name
+      full_name
+      owner {
+        login
+        type
+      }
+    }
+    sender {
+      login
+      type
+    }
+  }
+}

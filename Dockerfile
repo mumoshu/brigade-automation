@@ -12,9 +12,15 @@ RUN mkdir -p /opt/app
 
 WORKDIR /opt/app
 
-COPY . .
+ADD package.json ./
+ADD config ./config
+ADD package-lock.json ./
+ADD build ./build
+RUN ls -lah
 
 ENV NPM_CONFIG_LOGLEVEL warn
+
+RUN npm config set @atomist:registry https://atomist.jfrog.io/atomist/api/npm/npm-dev/
 
 RUN npm install
 

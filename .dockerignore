@@ -18,3 +18,4 @@ CO*.md
 ts*.json
 **/*.log
 **/*.txt
+.envrc

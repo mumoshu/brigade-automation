@@ -1,6 +1,6 @@
 FROM node:9
 
-MAINTAINER David Dooling <david@atomist.com>
+MAINTAINER Yusuke KUOKA <ykuoka@gmail.com>
 
 ENV DUMB_INIT_VERSION=1.2.1
 
@@ -28,6 +28,7 @@ ENV SUPPRESS_NO_CONFIG_WARNING true
 
 EXPOSE 2866
 
-ENTRYPOINT ["dumb-init", "node", "--trace-warnings", "--expose_gc", "--optimize_for_size", "--always_compact", "--max_old_space_size=128"]
-
-CMD ["node_modules/@atomist/automation-client/start.client.js"]
+CMD [ "dumb-init", \
+  "node", "--trace-warnings", "--expose_gc", "--optimize_for_size", "--always_compact", "--max_old_space_size=128", \
+  "node_modules/@atomist/automation-client/start.client.js" \
+]

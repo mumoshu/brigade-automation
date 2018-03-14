@@ -1,23 +1,32 @@
-# @atomist/automation-seed
+# @mumoshu/brigade-automation
 
-[![npm version](https://badge.fury.io/js/%40atomist%2Fautomation-seed.svg)](https://badge.fury.io/js/%40atomist%2Fautomation-seed)
-[![Build Status](https://travis-ci.org/atomist/automation-seed-ts.svg?branch=master)](https://travis-ci.org/atomist/automation-seed-ts)
+[![npm version](https://badge.fury.io/js/%40mumoshu%2Fbrigade-automation.svg)](https://badge.fury.io/js/%40mumoshu%2Fbrigade-automation)
+[![Build Status](https://travis-ci.org/mumoshu/brigade-automation.svg?branch=master)](https://travis-ci.org/mumoshu/brigade-automation)
 
-This repository contains examples demonstrating use of
-the [Atomist][atomist] API.  You will find examples illustrating:
+This repository contains the atomist automation for [Brigade](https://github.com/Azure/brigade)
 
--   Creating bot commands using _command handlers_
+You will find implementaions of:
+
+-   Bot commands using _command handlers_
 -   Responding to DevOps events, e.g., commits pushed to a repository,
     using _event handlers_
 
-These examples use the [`@atomist/automation-client`][client] node
+These implementations use the [`@atomist/automation-client`][client] node
 module to implement a local client that connects to the Atomist API.
 
 [client]: https://github.com/atomist/automation-client-ts (@atomist/automation-client Node Module)
 
+Atomist then acts as the webhook gateway for brigade-automation, so that the automation itself can indirectly receive webhook events without being exposed to the Internet.
+
+This results in e.g. a more secure CI/CD pipeline because then you don't need to expose your K8S API server to the Internet for access from your CI service like Travis, CircleCI, and so on.
+
+## Development
+
 ## Using edge atomist libraries
 
-In your package.json:
+This app uses the edge atomist library to leverage very recent features of it(as of Mar. 2018).
+
+To use the edge library, it must be reffered in your package.json like:
 
 ```
 "dependencies": {
@@ -26,7 +35,7 @@ In your package.json:
   },
 ```
 
-Point npm to fetch edge atomist libraries from atomist's development npm repository:
+Also point npm to fetch edge atomist libraries from atomist's development npm repository:
 
 ```
 npm config set @atomist:registry https://atomist.jfrog.io/atomist/api/npm/npm-dev/
@@ -34,7 +43,7 @@ npm config set @atomist:registry https://atomist.jfrog.io/atomist/api/npm/npm-de
 npm install
 ```
 
-See https://atomist.jfrog.io/atomist/webapp/#/artifacts/browse/tree/General/npm-dev-local/@atomist/automation-client/-/@atomist/automation-client-0.6.7-20180304171840.tgz for more info.
+See https://atomist.jfrog.io/atomist/webapp/#/artifacts/browse/tree/General/npm-dev-local/@atomist/automation-client/-/@atomist/automation-client-0.6.7-20180304171840.tgz for more info about setting jfrog as a npm repository.
 
 ## Prerequisites
 
@@ -164,12 +173,25 @@ $ npm run build
 $ npm start
 ```
 
+To build a Docker image, run:
+
+```console
+$ docker build -t mumoshu/brigade-automation:VERSION .
+```
+
 To download and run the Docker image of this project, run the
 following command
 
 ```console
-$ docker run --rm -e GITHUB_TOKEN=YOUR_TOKEN -e ATOMIST_TEAM=TEAM_ID \
-    atomist/automation-seed-ts:VERSION
+$ cat << EOS > .envrc
+export GITHUB_TOKEN=YOUR_TOKEN
+export ATOMIST_TEAM=YOUT_TEAM
+EOS
+
+$ direnv allow .
+
+$ docker run --rm -e GITHUB_TOKEN -e ATOMIST_TEAM \
+    mumoshu/brigade-automation:VERSION
 ```
 
 replacing `YOUR_TOKEN` and `TEAM_ID` with the token and team ID from
@@ -179,7 +201,7 @@ Note that this will not be running any code from your local machine
 but the code in the Docker image.
 
 To run the Docker image in a Kubernetes cluster, you can use the
-[deployment spec](automation-seed-deployment.json) from this
+[deployment spec](brigade-automationdeployment.json) from this
 repository, replacing `YOUR_TOKEN`, `TEAM_ID` (twice!), and `VERSION`
 in the spec as above in the Docker run command, and running the
 following command
@@ -189,6 +211,23 @@ $ kubectl create -f automation-seed-deployment.json
 ```
 
 [latest]: https://github.com/atomist/automation-seed-ts/releases/latest
+
+An alternative way is to use [helm](https://github.com/kubernetes/helm) chart for installing the deployment:
+
+```console
+# Replace $region, $awsaccount and $keyid according to your setup
+$ cat << EOF > .sops.yaml
+creation_rules:
+- kms: "arn:aws:kms:$region:$awsaccount:key/$keyid"
+EOF
+$ cat << EOF > secrets.yaml.cleartext
+env:
+  GITHUB_TOKEN: $GITHUB_TOKEN
+  ATOMIST_TEAM: $ATOMIST_TEAM
+EOF
+$ sops -e secrets.yaml.cleartext > secrets.yaml
+$ helm-secrets install ./charts/brigade-automation -f secrets.yaml -n your-brigade-project-ns
+```
 
 ## Invoking a command handler from Slack
 

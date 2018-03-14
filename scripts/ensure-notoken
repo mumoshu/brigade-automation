@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -euv
+
+docker run -it --rm -e GITHUB_TOKEN mumoshu/brigade-automation:${TAG} bash -c '
+  find . -type f -exec cat {} \; | grep ${GITHUB_TOKEN} > out
+  if [ $(cat out | wc -l) -gt 0 ]; then
+    echo GITHUB_TOKEN found in the image! 1>&2
+    exit 1
+  fi
+'
+
+docker run -it --rm -e ATOMIST_TEAM mumoshu/brigade-automation:${TAG} bash -c '
+  find . -type f -exec cat {} \; | grep ${ATOMIST_TEAM} > out
+  if [ $(cat out | wc -l) -gt 0 ]; then
+    echo ATOMIST_TEAM found in the image! 1>&2
+    exit 1
+  fi
+'

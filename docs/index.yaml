@@ -1,0 +1,12 @@
+apiVersion: v1
+entries:
+  brigade-automation:
+  - apiVersion: v1
+    created: 2018-03-15T09:51:36.186195244+09:00
+    description: A Helm chart for brigade-automation
+    digest: e7e23a68396a789e9511c5efac53e8e5e04b7e4cc3b2403a2622e83337d94b24
+    name: brigade-automation
+    urls:
+    - brigade-automation-v0.1.0.tgz
+    version: v0.1.0
+generated: 2018-03-15T09:51:36.185176715+09:00

@@ -335,6 +335,20 @@ the NPM module and automatically create a GitHub release using the tag
 name for the release and the comment provided on the annotated tag as
 the contents of the release notes.
 
+#### Publishiung the helm chart
+
+The chart is available at the chart repository: https://mumoshu.github.io/brigade-automation
+
+To publish a new revision of the helm chart, run:
+
+```console
+# Install the required plugin: https://github.com/technosophos/helm-github
+$ helm plugin install https://github.com/technosophos/helm-github
+
+# Publish it
+$ scripts/publish-chart
+```
+
 ---
 
 Created by [Atomist][atomist].

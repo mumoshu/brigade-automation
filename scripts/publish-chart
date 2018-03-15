@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Pre-requisite: https://github.com/technosophos/helm-github
+
+helm package charts/brigade-automation
+mkdir -p docs
+helm github push brigade-automation-v0.1.0.tgz
